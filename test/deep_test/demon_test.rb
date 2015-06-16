@@ -21,6 +21,16 @@ module DeepTest
       end
     end
 
+    test 're raise an exception' do
+      options = Options.new({})
+      demon = ProcDemon.new(proc do
+        puts "hello stdout"
+      end)
+      demon.stubs(:execute).raises(Exception.new)
+
+      assert_raise(Errno::ECONNREFUSED) { demon.forked("name", options, []) }
+    end
+
     def after_connecting_to operator, timeout = 5
       start = Time.now
       timedout = false

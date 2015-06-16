@@ -4,11 +4,11 @@ module DeepTest
       options.connect_to_central_command do |wire|
         ProxyIO.replace_stdout_stderr!(wire) do
           begin
-            execute *demon_args
+            execute(*demon_args)
           rescue SystemExit => e
             raise
           rescue Exception => e
-            FailureMessage.show self.class.name, "Process #{Process.pid} exiting with exception: #{e.class}: #{e.message}"
+            FailureMessage.show self.class.name, "Process #{Process.pid}, connected to #{Socket.gethostname}, exiting with exception: #{e.class}: #{e.message}"
             raise
           end
         end
