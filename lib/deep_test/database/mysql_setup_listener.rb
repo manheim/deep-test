@@ -86,7 +86,7 @@ module DeepTest
       # or would like the dump file to be something other than the default
       #
       def dump_file_name
-        "#{RAILS_ROOT}/db/deep_test_schema.sql"
+        Rails.root.join('db', 'deep_test_schema.sql')
       end
 
       def system(command) # :nodoc:
