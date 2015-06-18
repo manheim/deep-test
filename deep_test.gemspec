@@ -14,9 +14,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency "bundler", ">= 1.0.0"
   s.add_development_dependency "mocha", "0.13.3"
   s.add_development_dependency "dust", "0.1.6"
-  s.add_runtime_dependency "rspec", "1.1.12"
-  s.add_runtime_dependency "rake", "10.1.1"
-  s.add_runtime_dependency "test-unit", "2.5.5"
+  s.add_runtime_dependency "rspec", ">= 0"
+  s.add_runtime_dependency "rake", ">= 10.1.1"
+  s.add_runtime_dependency "test-unit", ">= 0"
 
   s.files        = `git ls-files`.split("\n")
   s.executables  = `git ls-files`.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact
