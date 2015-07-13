@@ -7,11 +7,32 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    builder (3.2.2)
+    cucumber (2.0.1)
+      builder (>= 2.1.2)
+      cucumber-core (~> 1.2.0)
+      diff-lcs (>= 1.1.3)
+      gherkin (~> 2.12)
+      multi_json (>= 1.7.5, < 2.0)
+      multi_test (>= 0.1.2)
+    cucumber-core (1.2.0)
+      gherkin (~> 2.12.0)
+    diff-lcs (1.2.5)
     dust (0.1.6)
+    gherkin (2.12.2)
+      multi_json (~> 1.3)
+    hoe (3.13.1)
+      rake (>= 0.8, < 11.0)
     metaclass (0.0.4)
     mocha (0.13.3)
       metaclass (~> 0.0.1)
+    multi_json (1.11.2)
+    multi_test (0.1.2)
     rake (10.4.2)
+    rspec (1.1.12)
+      cucumber (>= 0.1.13)
+      hoe (>= 1.8.2)
+    test-unit (2.5.5)
 
 PLATFORMS
   ruby
@@ -21,3 +42,5 @@ DEPENDENCIES
   deep_test!
   dust (= 0.1.6)
   mocha (= 0.13.3)
+  rspec (= 1.1.12)
+  test-unit (= 2.5.5)
