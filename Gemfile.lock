@@ -33,6 +33,7 @@ GEM
       cucumber (>= 0.1.13)
       hoe (>= 1.8.2)
     test-unit (2.5.5)
+    timecop (0.7.4)
 
 PLATFORMS
   ruby
@@ -44,3 +45,4 @@ DEPENDENCIES
   mocha (= 0.13.3)
   rspec (= 1.1.12)
   test-unit (= 2.5.5)
+  timecop (= 0.7.4)

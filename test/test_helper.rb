@@ -4,6 +4,7 @@ require 'test/unit'
 require 'dust'
 require 'mocha'
 require 'set'
+require 'timecop'
 
 $LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + "/../lib")
 require "deep_test"
@@ -26,6 +27,6 @@ class Test::Unit::TestCase
   end
 
   def at(time, &block)
-    Timewarp.freeze(time, &block)
+    Timecop.freeze(time, &block)
   end
 end

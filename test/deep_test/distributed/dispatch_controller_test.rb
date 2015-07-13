@@ -74,7 +74,7 @@ module DeepTest
           [receiver]
         )
 
-        Timewarp.freeze("2009-09-22 12:01:33") do
+        Timecop.freeze("2009-09-22 12:01:33") do
           controller.dispatch(:method_call)
           assert_equal <<-end_log, DeepTest.logger.logged_output
 [DeepTest@#{Socket.gethostname}] 2009-09-22 12:01:33 Exception while dispatching method_call to #{receiver.inspect}:
