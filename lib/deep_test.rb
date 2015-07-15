@@ -27,6 +27,7 @@ require "socket"
 require "webrick"
 require "timeout"
 require "base64"
+require 'io/console'
 
 require File.dirname(__FILE__) + "/telegraph"
 require File.dirname(__FILE__) + "/deep_test/lib_root"

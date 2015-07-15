@@ -1,6 +1,7 @@
 module DeepTest
   class ResultReader
-    OUTPUTS_PER_LINE = 130
+    DEFAULT_COLUMNS = 130
+
     def initialize(central_command)
       @central_command = central_command
     end
@@ -24,7 +25,10 @@ module DeepTest
             if result.respond_to?(:output) && (output = result.output)
               print(output.empty? ? "." : output)
               @output_count += 1
-              print("\n") if (@output_count % OUTPUTS_PER_LINE == 0)
+              if columns - @output_count <= 0
+                @output_count = 0
+                print("\n")
+              end
             end
 
             work_unit = work_units_by_id.delete(result.identifier)
@@ -40,6 +44,12 @@ module DeepTest
       end
 
       work_units_by_id
+    end
+
+    private
+
+    def columns
+      ENV['COLUMNS'] || IO.console.winsize.last || DEFAULT_COLUMNS
     end
   end
 end
