@@ -25,7 +25,7 @@ module DeepTest
             if result.respond_to?(:output) && (output = result.output)
               print(output.empty? ? "." : output)
               @output_count += 1
-              if columns - @output_count <= 0
+              if window_size - @output_count <= 0
                 @output_count = 0
                 print("\n")
               end
@@ -48,8 +48,20 @@ module DeepTest
 
     private
 
-    def columns
-      ENV['COLUMNS'] || IO.console.winsize.last || DEFAULT_COLUMNS
+    def window_size
+      # do not cache this value incase the screen is resized
+      width = window_size_from_io.to_i
+      width = window_size_from_env.to_i if width == 0
+      width = DEFAULT_COLUMNS if width == 0
+      width
+    end
+
+    def window_size_from_io
+      $stdout.winsize[1] if $stout.respond_to?(:winsize) || IO.console.winsize[1] if IO.console
+    end
+
+    def window_size_from_env
+      ENV['COLUMNS'] || ENV["TERM_WIDTH"]
     end
   end
 end
