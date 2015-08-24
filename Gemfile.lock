@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    deep_test (3.0.1)
+    deep_test (3.0.4)
       rake (>= 10.1.1)
 
 GEM
