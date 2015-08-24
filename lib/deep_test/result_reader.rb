@@ -57,7 +57,8 @@ module DeepTest
     end
 
     def window_size_from_io
-      $stdout.winsize[1] if $stout.respond_to?(:winsize) || IO.console.winsize[1] if IO.console
+      width = IO.console.winsize[1] if width.nil? && IO.console && IO.console.respond_to?(:winsize)
+      width
     end
 
     def window_size_from_env
