@@ -1,3 +1,4 @@
+require 'readline' # for some reason, with Rails 3.2, this does not work in load_files and is needed here
 require_relative "./../../deep_test"
 options = DeepTest::Options.from_command_line(ENV['OPTIONS'])
 ENV['DEEP_TEST_LOG_LEVEL'] = options.environment_log_level
