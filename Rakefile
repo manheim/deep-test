@@ -1,6 +1,7 @@
 require 'rake'
 require 'rake/testtask'
 require 'rdoc/task'
+require 'rubocop/rake_task'
 require 'rubygems/package_task'
 require 'rake/contrib/sshpublisher'
 require 'yaml'
@@ -14,6 +15,7 @@ $LOAD_PATH << File.dirname(__FILE__) + "/lib"
 require "deep_test/rake_tasks"
 
 task :default => %w[
+  rubocop
   test
   deep_test
   distributed_test
@@ -26,6 +28,8 @@ task :default => %w[
   #test_rails_project
 
 task :pc => :default
+
+RuboCop::RakeTask.new(:rubocop)
 
 Rake::TestTask.new do |t|
   t.pattern = "test/**/supervised_test_suite_test.rb"
