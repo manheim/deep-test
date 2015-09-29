@@ -6,3 +6,4 @@ pkg
 tags
 negative_acceptance_tests/metrics.data
 vendor/bundle
+Gemfile.lock
