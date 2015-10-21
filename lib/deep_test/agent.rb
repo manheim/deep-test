@@ -45,7 +45,7 @@ module DeepTest
         end
       end
     rescue CentralCommand::NoWorkUnitsRemainingError
-      DeepTest.logger.debug { "Agent #{number}: no more work to do" }
+      DeepTest.logger.debug { "#{Socket.gethostname} Agent #{number}: no more work to do" }
     ensure
       @listener.ending(self)
     end
@@ -56,10 +56,10 @@ module DeepTest
           message = wire.next_message(:timeout => 2)
           next message.body == CentralCommand::NoMoreWork ? nil : message
         rescue Telegraph::NoMessageAvailable
-          DeepTest.logger.debug { "Agent: NoMessageAvailable" }
+          DeepTest.logger.debug { "#{Socket.gethostname} Agent: NoMessageAvailable" }
           retry
         rescue Telegraph::LineDead
-          DeepTest.logger.debug { "Agent: LineDead" }
+          DeepTest.logger.debug { "#{Socket.gethostname} Agent: LineDead" }
           next nil
         end
       end
