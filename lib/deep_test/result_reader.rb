@@ -46,7 +46,7 @@ module DeepTest
       work_units_by_id
     end
 
-    private
+    protected
 
     def window_size
       # do not cache this value incase the screen is resized

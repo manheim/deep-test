@@ -39,7 +39,7 @@ module DeepTest
       @options.pattern = Dir.pwd + "/" + pattern
     end
 
-  private
+    protected
 
     def runner
       File.expand_path(File.dirname(__FILE__) + "/test/run_test_suite.rb")

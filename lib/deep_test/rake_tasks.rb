@@ -4,6 +4,7 @@ require "base64"
 require File.dirname(__FILE__) + "/options"
 require File.dirname(__FILE__) + "/cpu_info"
 require File.dirname(__FILE__) + "/test_task"
+require File.dirname(__FILE__) + "/mini_test_task"
 require File.dirname(__FILE__) + "/rspec_detector"
 
 DeepTest::RSpecDetector.if_rspec_available do
