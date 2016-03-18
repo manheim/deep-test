@@ -10,6 +10,7 @@ AllCops:
   Exclude:
     - 'sample_rails_project/**/*'
     - 'vendor/**/*'
+  DisplayCopNames: true
 
 # Offense count: 3
 Lint/AmbiguousOperator:
