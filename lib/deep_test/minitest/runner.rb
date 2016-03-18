@@ -23,6 +23,7 @@ module DeepTest
         end
 
         MiniTestResultReader.new(central_command).read(identifiable_work) do |_identifiable_work, work_result|
+          puts work_result.host unless work_result.result.passed?
           ::MiniTest.reporter.synchronize { ::MiniTest.reporter.record(work_result.result) } # result will come from the output of the test
         end
 

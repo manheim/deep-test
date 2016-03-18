@@ -3,10 +3,11 @@ module DeepTest
     class WorkResult
       include CentralCommand::Result
 
-      attr_reader :identifier, :errors, :result
+      attr_reader :identifier, :errors, :result, :host
 
       def initialize(identifier, result)
         @result = result
+        @host = Socket.gethostname
         @identifier = identifier
         @errors = result.failures
       end

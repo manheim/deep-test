@@ -13,8 +13,10 @@ module DeepTest
       def add_to(result)
         @failures.each {|e| result.add_failure(e)}
 
-        @errors.each do |e| 
+        @errors.each do |e|
           e.resolve_marshallable_exception
+          e.exception.backtrace.unshift("Host: #{host}")
+          e.backtrace.unshift("Host: #{host}")
           result.add_error(e)
         end
 
@@ -26,7 +28,7 @@ module DeepTest
         error.make_exception_marshallable
         super(error)
       end
-      
+
       def failed_due_to_deadlock?
         @errors.any? && DeepTest::DeadlockDetector.due_to_deadlock?(@errors.last)
       end
