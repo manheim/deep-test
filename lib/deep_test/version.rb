@@ -1,3 +1,3 @@
 module DeepTest
-  VERSION = "3.0.6.5"
+  VERSION = "3.1.0"
 end
