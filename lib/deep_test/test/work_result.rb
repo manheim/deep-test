@@ -6,7 +6,7 @@ module DeepTest
       attr_accessor :output
 
       def initialize(identifier, host)
-        super(identifier)
+        super()
         @identifier = identifier
         @host = host
       end
