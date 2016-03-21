@@ -2,12 +2,13 @@ module DeepTest
   module Test
     class WorkResult < ::Test::Unit::TestResult
       include CentralCommand::Result
-      attr_reader :identifier
+      attr_reader :identifier, :host
       attr_accessor :output
 
-      def initialize(identifier)
-        super()
+      def initialize(identifier, host)
+        super(identifier)
         @identifier = identifier
+        @host = host
       end
 
       def add_to(result)

@@ -28,7 +28,7 @@ module DeepTest
       protected
 
       def run_without_deadlock_protection
-        result = WorkResult.new(@test_case.name)
+        result = WorkResult.new(@test_case.name, Socket.gethostname)
         output = capture_stdout do
           @test_case.run(result) {|channel,event|}
         end
