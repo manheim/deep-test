@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency "rake", ">= 10.1.1"
 
-  s.files        = `git ls-files lib bin infrastructure CHANGELOG README.rdoc`
-  s.executables  = `git ls-files bin`
+  s.files        = `git ls-files lib bin infrastructure CHANGELOG README.rdoc`.split("\n")
+  s.executables  = `git ls-files bin`.split("\n")
   s.require_path = 'lib'
 end
