@@ -35,6 +35,7 @@ module Telegraph
     def send_message(body, options = {})
       sequence_ack = options[:ack] ? options[:ack].sequence_number : nil
       message = Message.new(body, @sequence.next, sequence_ack)
+      debug { "SENDING MESSAGE: #{body}" }
       message.write stream
       unacked_sequences_numbers[message.sequence_number] = message if options[:need_ack]
     rescue IOError, Errno::EPIPE, Errno::ECONNRESET => e

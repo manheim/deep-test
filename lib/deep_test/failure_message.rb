@@ -1,6 +1,6 @@
 module DeepTest
   module FailureMessage
-    def self.show(title, message, width = 70)
+    def self.show(title, message, width = 80)
       lines = [" #{title} ".center(width, '*')]
       message.split('\n').each do |line|
         lines << "* #{line.strip}".ljust(width - 1) + "*"

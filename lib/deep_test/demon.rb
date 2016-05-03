@@ -8,7 +8,7 @@ module DeepTest
           rescue SystemExit => e
             raise
           rescue Exception => e
-            FailureMessage.show self.class.name, "Process #{Process.pid}, connected to #{Socket.gethostname}, exiting with exception: #{e.class}: #{e.message}"
+            FailureMessage.show self.class.name, "Process #{Process.pid}, connected to #{Socket.gethostname}, exiting with exception: #{e.class}: #{e.message}\n#{e.backtrace.join("\n")}"
             raise
           end
         end
