@@ -4,11 +4,10 @@ begin
   require 'minitest'
 
   require File.dirname(__FILE__) + "/minitest/extensions/minitest"
-  require File.dirname(__FILE__) + "/minitest/extensions/minitest/assertion"
   require File.dirname(__FILE__) + "/minitest/reporters/progress_reporter"
   require File.dirname(__FILE__) + "/minitest/reporters/summary_reporter"
   require File.dirname(__FILE__) + "/minitest/runner"
-  require File.dirname(__FILE__) + "/minitest/dumpable_unexpected_error.rb"
+  require File.dirname(__FILE__) + "/minitest/dumpable_error.rb"
   require File.dirname(__FILE__) + "/minitest/work_result"
   require File.dirname(__FILE__) + "/minitest/work_unit"
 rescue LoadError # rubocop:disable Lint/HandleExceptions

@@ -11,8 +11,6 @@ module DeepTest
 
       def run
         result = ::Minitest.run_one_method(test_suite, method)
-        # Do we really need to make our own WorkResult?
-        # Can we pass the actual result
         DeepTest::MiniTest::WorkResult.new(identifier, result)
       end
     end
