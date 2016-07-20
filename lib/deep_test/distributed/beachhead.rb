@@ -1,7 +1,17 @@
 module DeepTest
   module Distributed
+    class NoOpenPorts < StandardError
+      def initialize
+        super "No ports open between #{MIN_PORT} and #{MAX_PORT}"
+      end
+    end
+
     class Beachhead < LocalDeployment
       include Demon
+
+      MIN_PORT = 62432
+      MAX_PORT = 62532
+      PORT_RANGE = *MIN_PORT..MAX_PORT
 
       MERCY_KILLING_GRACE_PERIOD = 10 * 60 unless defined?(MERCY_KILLING_GRACE_PERIOD)
 
@@ -52,7 +62,7 @@ module DeepTest
         innie.close
 
         switchboard = Telegraph::Switchboard.new
-        operator = Telegraph::Operator.listen "0.0.0.0", 0, switchboard
+        operator = setup_listener(switchboard)
 
         DeepTest.logger.debug { "Beachhead started on port #{operator.port}" }
 
@@ -75,6 +85,18 @@ module DeepTest
               end
             end
           end
+        end
+      end
+
+      def setup_listener(switchboard)
+        connection_attempt = 1
+        begin
+          port = PORT_RANGE[connection_attempt - 1]
+          raise NoOpenPorts if port.nil?
+          Telegraph::Operator.listen "0.0.0.0", port, switchboard
+        rescue Errno::EADDRINUSE
+          connection_attempt += 1
+          retry
         end
       end
 
