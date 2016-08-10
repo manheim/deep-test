@@ -9,13 +9,13 @@ module DeepTest
         # ActiveRecord configuration to use when connecting to
         # MySQL to create databases, drop database, and grant
         # privileges.  By default, connects to information_schema
-        # on localhost as root with no password.
+        # on 127.0.0.1 as root with no password.
         #
         attr_accessor :admin_configuration
       end
       self.admin_configuration = {
         :adapter  => "mysql2",
-        :host     => "localhost",
+        :host     => "127.0.0.1",
         :username => "root",
         :database => "information_schema"
       }
