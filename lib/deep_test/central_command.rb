@@ -70,7 +70,7 @@ module DeepTest
 
     def start
       @switchboard = Telegraph::Switchboard.new
-      @operator = Telegraph::Operator.listen("0.0.0.0", 0, @switchboard)
+      @operator = Telegraph::Operator.listen("0.0.0.0", @switchboard)
       @options.server_port = @operator.port
       @process_messages_thread = Thread.new { process_messages }
 
@@ -78,7 +78,7 @@ module DeepTest
     end
 
     unless defined?(NeedWork)
-      NeedWork = "NeedWork" 
+      NeedWork = "NeedWork"
       NoMoreWork = "NoMoreWork"
       module Result; end
       module Operation; end
@@ -100,14 +100,14 @@ module DeepTest
           case message.body
           when NeedWork
             send_work wire
-          when Result 
+          when Result
             write_result message.body
             send_work wire
           when Operation
             message.body.execute
           when Metrics::Measurement
             data.add message.body
-          else 
+          else
             raise UnexpectedMessageError, message.inspect
           end
 

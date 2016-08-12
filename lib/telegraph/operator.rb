@@ -1,13 +1,34 @@
 require 'thread'
 
 module Telegraph
+  class NoOpenPorts < StandardError
+    def initialize
+      super "No ports open between #{MIN_PORT} and #{MAX_PORT}"
+    end
+  end
+
   class Operator
     include Logging
 
+    MIN_PORT = 62430
+    MAX_PORT = 62539
+    PORT_RANGE = *MIN_PORT..MAX_PORT
+
     attr_reader :switchboard
 
-    def self.listen(host, port, switchboard = Switchboard.new)
-      new TCPServer.new(host, port), switchboard
+    def self.listen(host, switchboard = Switchboard.new)
+      connection_attempt = 0
+
+      begin
+        port = MIN_PORT + connection_attempt
+        raise NoOpenPorts if port > MAX_PORT
+        server = TCPServer.new(host, port)
+      rescue Errno::EADDRINUSE
+        connection_attempt += 1
+        retry
+      end
+
+      new(server, switchboard)
     end
 
     def initialize(socket, switchboard)
