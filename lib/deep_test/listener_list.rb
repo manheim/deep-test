@@ -7,7 +7,7 @@ module DeepTest
     end
 
     NullListener.instance_methods(false).each do |event|
-      eval <<-end_src
+      class_eval <<-end_src, __FILE__, __LINE__
         def #{event}(*args)
           @listeners.each {|l| l.#{event}(*args)}
         end

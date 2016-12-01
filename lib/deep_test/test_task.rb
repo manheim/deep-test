@@ -24,7 +24,7 @@ module DeepTest
     end
 
     Options::VALID_OPTIONS.each do |option|
-      eval <<-end_src
+      class_eval <<-end_src, __FILE__, __LINE__
         def #{option.name}
           @options.#{option.name}
         end
