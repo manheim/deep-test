@@ -3,7 +3,6 @@ require 'rake/testtask'
 require 'rdoc/task'
 require 'rubocop/rake_task'
 require 'rubygems/package_task'
-require 'rake/contrib/sshpublisher'
 require 'yaml'
 
 require 'rubygems'
