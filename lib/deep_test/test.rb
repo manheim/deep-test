@@ -11,6 +11,6 @@ begin
   require File.dirname(__FILE__) + "/test/supervised_test_suite"
   require File.dirname(__FILE__) + "/test/work_unit"
   require File.dirname(__FILE__) + "/test/work_result"
-rescue LoadError
+rescue LoadError # rubocop:disable Lint/HandleExceptions
   # test-unit not found
 end

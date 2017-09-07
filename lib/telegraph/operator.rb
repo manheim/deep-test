@@ -10,8 +10,8 @@ module Telegraph
   class Operator
     include Logging
 
-    MIN_PORT = 62430
-    MAX_PORT = 62539
+    MIN_PORT = 62_430
+    MAX_PORT = 62_539
     PORT_RANGE = *MIN_PORT..MAX_PORT
 
     attr_reader :switchboard
