@@ -1,6 +1,6 @@
 = DeepTest
 
-DeepTest enables tests to run in parallel using multiple processes.  Processes
+DeepTest enables tests to run in parallel using multiple processes. Processes
 may spawned locally to take advantage of multiple processors on a single
 machine or distributed across many machines to take advantage of distributed
 processing.
@@ -8,22 +8,31 @@ processing.
 == Note
 
 This README has been updated to reflect changes made on the master branch that have
-not yet been released.  If you are looking for the README for DeepTest 1.2 it is
+not yet been released. If you are looking for the README for DeepTest 1.2 it is
 availeble on the 1.2.x branch on github.
 
 == Usage
 
 In your Rakefile:
 
+```ruby
   require "rubygems"
   require "deep_test/rake_tasks"
-  
-  # sample DeepTest task
+
+  # sample test-unit task
 
   DeepTest::TestTask.new "task_name" do |t|
     t.number_of_agents = 2   # optional, defaults to number of cores
     t.pattern = "test/**/*_test.rb"
     t.libs << "test" # may be necessary for Rails >= 2.1.x
+  end
+
+  # sample minitest task
+
+  DeepTest::MiniTestTask.new "task_name" do |t|
+    t.number_of_agents = 2   # optional, defaults to number of cores
+    t.pattern = "test/**/*_test.rb"
+    t.libs << "test"
   end
 
   # sample SpecTask using DeepTest
@@ -32,10 +41,11 @@ In your Rakefile:
     t.spec_files = FileList['spec/**/*_spec.rb']
     t.deep_test :number_of_agents => 2   # optional, defaults to number of cores
   end
-
+```
 
 === Specifying a Listener to be Notified of Events
 
+```ruby
 In my_listener.rb
   class MyListener
     def before_sync
@@ -53,19 +63,22 @@ In my_listener.rb
     def finished_work(agent, work_unit, result)
     end
   end
+```
 
 In your Rakefile
 
+```ruby
   DeepTest::TestTask.new "task_name" do |t|
-    ... 
+    ...
     t.listener = "MyListener"
   end
+```
 
 An instance of MyListener will be created for each agent that is
-started, and will receive events from that agent.  However, you must ensure
+started, and will receive events from that agent. However, you must ensure
 that the MyListener class is loaded at the time that the test files are
-loaded, so it is available to be instantiated.  You can specify multiple
-listener classes by separating them with a comma.  For more information about
+loaded, so it is available to be instantiated. You can specify multiple
+listener classes by separating them with a comma. For more information about
 when events are triggered, see the documentation at
 DeepTest::NullListener.
 
@@ -73,22 +86,23 @@ DeepTest::NullListener.
 === Setting Up A New Database For Each Agent
 
 By default, DeepTest will reinitialize ActiveRecord connections if ActiveRecord
-is loaded when the agents are started.  This means all agents are running
-against the same database.  You may want each agent to use a database
-decidicated to it.  To facilitate this, DeepTest provides a agent listener to
-help you.  If you're using Rails with Mysql, simply configure DeepTest as 
+is loaded when the agents are started. This means all agents are running
+against the same database. You may want each agent to use a database
+decidicated to it. To facilitate this, DeepTest provides a agent listener to
+help you. If you're using Rails with Mysql, simply configure DeepTest as
 follows in your Rakefile:
 
+```ruby
   DeepTest::TestTask.new "task_name" do |t|
     ...
     t.listener = "DeepTest::Database::MysqlSetupListener"
   end
-
+```
 
 Before spawning agents, DeepTest will dump the schema of the database for the
-current Rails environment (usually test).  As each agent starts up, the
+current Rails environment (usually test). As each agent starts up, the
 listener will create a database dedicated to that agent and load the schema
-into it.  The database will be dropped when the agent process exits.  
+into it. The database will be dropped when the agent process exits.
 
 If you're using Mysql but not using Rails, you'll have to create a subclass of
 MysqlSetupListener and override +master_database_config+ and +dump_file_name+,
@@ -97,13 +111,13 @@ as the default implementations of these methods are Rails specific.
 
 If you're using a database other than Mysql, read the documentation for
 DeepTest::Database::SetupListener and create a new subclass for your database
-type.  If you do this, please consider contributing your subclass back to the
+type. If you do this, please consider contributing your subclass back to the
 project so that it can be included in later releases of DeepTest.
 
 === Distributing Tests Across Multiple Machines
 
 In addition to running your tests in parallel, DeepTest can also distribute
-them across multiple machines.  It does this by first mirroring the local
+them across multiple machines. It does this by first mirroring the local
 working copy that launched the tests on each machine that will be running tests.
 Then agents are launched on each of the machines and consume tests in the same
 fashion as when DeepTest is running locally.
@@ -112,10 +126,10 @@ fashion as when DeepTest is running locally.
 
 Before you can distribute tests, you must ensure that all the machines involved
 (including the machine with the local working copy) have rsync installed for
-mirroring working copies.  You must also have either SSH or an RSync daemon
-exposing your local working copy running on the local development machine.  For
+mirroring working copies. You must also have either SSH or an RSync daemon
+exposing your local working copy running on the local development machine. For
 more information about rsync, visit the rsync
-webpage[http://www.samba.org/rsync/].  Currently only passwordless access is
+webpage[http://www.samba.org/rsync/]. Currently only passwordless access is
 supported, so you must either setup your RSync daemon to be accessible without
 a password or enable passwordless SSH access from the test machines to the
 local development machine. DeepTest must also be installed as a gem on each
@@ -125,13 +139,14 @@ machine.
 ==== Configuring Your Project
 
 There is no need to start a special daemon process on the machines that will
-be used to run DeepTest.  Simply specify the names of the hosts that you
+be used to run DeepTest. Simply specify the names of the hosts that you
 would like DeepTest to distribute to along with a set of sync_options telling
 it how to to rsync the project code.
 
 If you're using rsync over ssh, create a DeepTest test task similar to that
 below in your Rakefile.
 
+```ruby
   DeepTest::TestTask.new "deep_test_distributed" do |t|
     t.pattern = "test/**/*_test.rb" # whatever is appropriate for your project
     t.distributed_hosts = %w[host1 host2]
@@ -141,14 +156,16 @@ below in your Rakefile.
       :remote_base_dir => <absolute path to keep working copies in on remote machine> # defaults to /tmp
     }
   end
+```
 
-The :source entry in sync_options can be easily calculated based on the value
-of \_\_FILE__ when defining the task.  :username will be used by rsync to ssh
+The `:source` entry in `sync_options` can be easily calculated based on the value
+of `__FILE__` when defining the task. `:username` will be used by rsync to ssh
 back to the local machine and mirror the working copy.
 
 If you have an rsync daemon running in your local machine, configure the
 rake task as follows.
 
+```ruby
   DeepTest::TestTask.new "deep_test_distributed" do |t|
     t.pattern = "test/**/*_test.rb" # whatever is appropriate for your project
     t.distributed_hosts = %w[host1 host2]
@@ -158,15 +175,17 @@ rake task as follows.
       :username => "username"
     }
   end
+```
 
-Username is optional in both cases.  You'll need to either setup passwordless
+Username is optional in both cases. You'll need to either setup passwordless
 ssh access or run an rsync daemon that doesn't require passwords.
 
 There may be other options you'd like to pass to rsync in your particular
-scenario.  This can be done by adding an :rsync_options entry to sync_options.
+scenario. This can be done by adding an :rsync_options entry to sync_options.
 For example, if you're working on a Rails project you'll probably want to at
 least have something like this:
 
+```ruby
   DeepTest::TestTask.new "deep_test_distributed" do |t|
     ...
     excludes = %w[.svn tmp/** log/**]
@@ -175,14 +194,15 @@ least have something like this:
       :rsync_options => excludes.map {|s| "'--exclude=#{s}'"}.join(' ')
     }
   end
+```
 
 That way you can avoid spending any time mirroring tmp and log files that don't
-have any effect on the tests.  If you are running distributed tests against a
+have any effect on the tests. If you are running distributed tests against a
 database, consult the section above about creating a new database for each
-agent to see how to configure DeepTest for your project.  
+agent to see how to configure DeepTest for your project.
 
 Any number of projects can be run using the same test servers, as long as
-they're all using the same version of Ruby and DeepTest.  
+they're all using the same version of Ruby and DeepTest.
 
 == Contributors
 
@@ -193,6 +213,7 @@ they're all using the same version of Ruby and DeepTest.
 * Brian[http://blog.brianguthrie.com/] Guthrie[http://blog.brianguthrie.com/]
 * Shane[http://shanel.tumblr.com/] Liebling[http://shanel.tumblr.com/]
 * Scott Taylor
+* [Ryan Rosenblum](https://github.com/rrosenblum)
 
 == License
 
