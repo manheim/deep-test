@@ -14,8 +14,8 @@ module DeepTest
         ::MiniTest.init_plugins(options)
         ::MiniTest.reporter.start
 
-        identifiable_work = test_suites.each_with_object([]) do |suite, work|
-          suite.runnable_methods.each do |method|
+        identifiable_work = test_suites.shuffle.each_with_object([]) do |suite, work|
+          suite.runnable_methods.shuffle.each do |method|
             work_unit = MiniTest::WorkUnit.new(suite, method)
             work << work_unit.identifier
             central_command.write_work(work_unit)

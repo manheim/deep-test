@@ -48,6 +48,9 @@ module DeepTest
         send("#{option.name}=", hash[option.name] || hash[option.name.to_s] || option.default)
       end
       self.environment_log_level = ENV['DEEP_TEST_LOG_LEVEL']
+      if ENV['SEED']
+        Kernel.srand ENV['SEED']
+      end
     end
 
     def gathering_metrics?
