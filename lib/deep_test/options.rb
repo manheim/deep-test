@@ -12,11 +12,16 @@ module DeepTest
         Option.new(:sync_options,      {}),
         Option.new(:ui,                "DeepTest::UI::Console"),
         Option.new(:listener,          "DeepTest::NullListener"),
+        Option.new(:libs, [])
       ]
     end
 
     attr_accessor *VALID_OPTIONS.map {|o| o.name}
     attr_accessor :ssh_client_connection_info, :environment_log_level
+
+    def lib_path
+      libs.empty? ? '' : "-I#{libs.join(File::PATH_SEPARATOR)}"
+    end
 
     def number_of_agents
       return CpuInfo.new.count unless @number_of_agents

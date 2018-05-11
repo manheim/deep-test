@@ -8,7 +8,7 @@ module DeepTest
       @requires = []
       @name = name
       @libs = ["lib"]
-      @options = Options.new({})
+      @options = Options.new(:libs => @libs)
       self.pattern = "test/**/*_test.rb"
       yield self if block_given?
       define
@@ -17,10 +17,13 @@ module DeepTest
     def define
       desc "Run '#{@name}' suite using DeepTest"
       task @name do
-        lib_options = @libs.any? ? "-I" + @libs.join(File::PATH_SEPARATOR) : ""
         require_options = requires.map {|f| "-r#{f}"}.join(" ")
-        ruby "#{lib_options} #{require_options} #{runner} '#{@options.to_command_line}'"
+        ruby "#{lib_path} #{require_options} #{runner} '#{@options.to_command_line}'"
       end
+    end
+
+    def lib_path
+      @options.lib_path
     end
 
     Options::VALID_OPTIONS.each do |option|

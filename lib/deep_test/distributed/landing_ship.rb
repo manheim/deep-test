@@ -53,7 +53,7 @@ module DeepTest
         "#{ShellEnvironment.like_login} && " + 
         "cd #{options.mirror_path} && " +
         "OPTIONS=#{options.to_command_line} " + 
-        "bundle exec ruby lib/deep_test/distributed/establish_beachhead.rb" 
+        "bundle exec ruby #{options.lib_path} lib/deep_test/distributed/establish_beachhead.rb" 
       end
     end
   end
