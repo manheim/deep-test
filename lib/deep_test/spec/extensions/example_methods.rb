@@ -5,7 +5,7 @@ module Spec
         if ::Spec::VERSION::MAJOR == 1 &&
            ::Spec::VERSION::MINOR == 1 &&
            ::Spec::VERSION::TINY  >= 12
-          file, line = eval("caller", @_implementation.binding).first.split(/:/)
+          file, line = eval("caller", @_implementation.binding, __FILE__, __LINE__).first.split(/:/)
         else
           file, line = implementation_backtrace.first.split(/:/)
         end
@@ -15,7 +15,7 @@ module Spec
       class Identifier
         attr_reader :file, :line, :group_description, :description
         def initialize(file, line, group_description, description)
-          @file, @line, @group_description, @description = 
+          @file, @line, @group_description, @description =
            file,  line,  group_description,  description
         end
 
@@ -24,7 +24,7 @@ module Spec
         end
 
         def eql?(other)
-          File.basename(file) == File.basename(other.file) && 
+          File.basename(file) == File.basename(other.file) &&
                          line == other.line &&
             group_description == other.group_description &&
                   description == other.description

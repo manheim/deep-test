@@ -16,11 +16,12 @@ module DeepTest
 
     def resolve
       begin
-        klass = eval("::" + classname) 
+        klass = eval("::#{classname}", binding, __FILE__, __LINE__)
         resolved_message = message
       rescue => e
-        DeepTest.logger.debug { "Unable to load exception class: #{classname}: #{e.message}" }
-        DeepTest.logger.debug { e.backtrace.join("\n") }
+        DeepTest.logger.debug do
+          "Unable to load exception class: #{classname}: #{e.message}\n#{e.backtrace.join("\n")}"
+        end
 
         klass = UnloadableException
         resolved_message = "#{classname}: #{message}"

@@ -3,7 +3,9 @@ module DeepTest
     class Runner
       unless defined?(NO_FILTERS)
         NO_FILTERS = Object.new.instance_eval do
-          def filters; []; end;
+          def filters
+            []
+          end
           self
         end
       end

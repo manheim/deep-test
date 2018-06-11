@@ -59,7 +59,7 @@ module DeepTest
 
     def new_listener_list
       listeners = listener.split(',').map do |listener|
-        eval(listener).new
+        eval(listener, binding, __FILE__, __LINE__).new
       end
       ListenerList.new(listeners)
     end
@@ -80,7 +80,7 @@ module DeepTest
     #
     UI_INSTANCES = {} unless defined?(UI_INSTANCES)
     def ui_instance
-      UI_INSTANCES[self] ||= eval(ui).new(self)
+      UI_INSTANCES[self] ||= eval(ui, binding, __FILE__, __LINE__).new(self)
     end
 
     def to_command_line
