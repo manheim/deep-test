@@ -49,7 +49,7 @@ module DeepTest
       end
       self.environment_log_level = ENV['DEEP_TEST_LOG_LEVEL']
       if ENV['SEED']
-        Kernel.srand ENV['SEED']
+        Kernel.srand(ENV['SEED'].to_i)
       end
     end
 
