@@ -32,7 +32,7 @@ module DeepTest
           # The '/' after source tells rsync to copy the contents
           # of source to destination, rather than the source directory
           # itself
-          "rsync -az --delete #{@sync_options[:rsync_options]} #{DeepTest::LIB_ROOT} #{source} #{destination}".strip.squeeze(" ")
+          %Q(rsync -e "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" -az --delete #{@sync_options[:rsync_options]} #{DeepTest::LIB_ROOT} #{source} #{destination}).strip.squeeze(" ")
         end
 
         def remote_location(path)

@@ -46,14 +46,14 @@ module DeepTest
                             ""
                           end
 
-        "ssh -4 #{@config[:address]}#{username_option}"
+        "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -4 #{@config[:address]}#{username_option}"
       end
 
       def spawn_command(options)
-        "#{ShellEnvironment.like_login} && " + 
-        "cd #{options.mirror_path} && " +
-        "OPTIONS=#{options.to_command_line} " + 
-        "bundle exec ruby #{options.lib_path} lib/deep_test/distributed/establish_beachhead.rb" 
+        "#{ShellEnvironment.like_login} && " \
+        "cd #{options.mirror_path} && " \
+        "OPTIONS=#{options.to_command_line} " \
+        "bundle exec ruby #{options.lib_path} lib/deep_test/distributed/establish_beachhead.rb"
       end
     end
   end
